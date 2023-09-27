@@ -4,59 +4,43 @@ import BoxFondo from "./BoxFondo"
 import DatePicker from "react-datepicker";
 import { useState, forwardRef } from "react";
 import DropdownList from "../CountryInfo/DropdownList";
-import { getYear, getMonth } from "date-fns"; // Agrega esta importación para las funciones de fecha
+import { getYear, getMonth } from "date-fns";
 import es from 'date-fns/locale/es';
-import range from "lodash/range"; // Agrega esta importación para la función "range"
+import range from "lodash/range";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 
 
 const Form = () => {
 
-    const { register, handleSubmit, watch, formState: {errors}, control } = useForm()
+    const { register, handleSubmit, formState: {errors}, control } = useForm()
 
     // Fecha para persona mayor de edad:
         const eighteenYearsAgo = new Date();
         eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
         const [fNacimiento, setFNacimiento] = useState(eighteenYearsAgo);
 
-    // Estado: país de origen:
+    // Estado país de origen:
         const [paisOrigen, setPaisOrigen] = useState()
 
     // Estado Fecha de Validez
-        // Fecha inicial:
-            // const [startDate, setStartDate] = useState(new Date());
-            const [dateRange, setDateRange] = useState([new Date(), null]);
-            const [startDate, endDate] = dateRange;
-        // Fecha final:
-            // const [endDate, setEndDate] = useState(null);
-        // Campo endDate controlado por UseForm:
-            // const { register: registerEndDate, formState: { errors: endDateErrors } } = useForm({
-            //     mode: "onChange", // Activa la validación en cada cambio de valor
-            // });
-        // Manejador del rango de fechas:
-            // const onChange = (dates) => {
-            //     const [start, end] = dates;
-            //     setStartDate(start);
-            //     setEndDate(end);
-            // };
+        const [dateRange, setDateRange] = useState([new Date(), null]);
+        const [startDate, endDate] = dateRange;
 
-    const BotonFecha = forwardRef(({ value, onClick }, ref) => (
-        <button  onClick={onClick} ref={ref}>
-          {value}
-        </button>
-      ));
+    // Botón de fecha de nacimiento:
+        const BotonFecha = forwardRef(({ value, onClick }, ref) => (
+            <button  onClick={onClick} ref={ref}>
+            {value}
+            </button>
+        ));
 
-    const years = range(1950, getYear(new Date()) - 17, 1);
-    const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre", ];
+    // Lista desplegable de la fecha de nacimiento:
+        const years = range(1950, getYear(new Date()) - 17, 1);
+        const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre", ];
 
     // Estilos:
         const styleDivContent = { display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}
         const styleDisplayNombres = {display: 'flex', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px', alignItems: 'center', width: '300px' }
-
-    // Contenido de los tooltips
-        const nombreMensaje = errors.nombre?.type === 'required' ? "Debe colocar un nombre" : "Máximo de 30 caracteres"
-        // console.log(errors.nombre?.type);
 
     const onSubmit = (data) => {
         data.fechaNacimiento = fNacimiento;

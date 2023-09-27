@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css'
 import Form from './Form/Form'
+import CardContainer from './Card/CardContainer';
 // import 'tailwindcss/tailwind.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <Form />
+      <CardContainer />
     </>
   )
 }
