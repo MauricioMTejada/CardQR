@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import BarraDeTitulo from "./BarraDeTitulo"
 import BoxFondo from "./BoxFondo"
 import DatePicker from "react-datepicker";
@@ -13,7 +13,7 @@ import { Tooltip } from 'react-tooltip'
 
 const Form = () => {
 
-    const { register, handleSubmit, watch, formState: {errors} } = useForm()
+    const { register, handleSubmit, watch, formState: {errors}, control } = useForm()
 
     // Fecha para persona mayor de edad:
         const eighteenYearsAgo = new Date();
@@ -24,13 +24,22 @@ const Form = () => {
         const [paisOrigen, setPaisOrigen] = useState()
 
     // Estado Fecha de Validez
-        const [startDate, setStartDate] = useState(new Date());
-        const [endDate, setEndDate] = useState(null);
-        const onChange = (dates) => {
-            const [start, end] = dates;
-            setStartDate(start);
-            setEndDate(end);
-        };
+        // Fecha inicial:
+            // const [startDate, setStartDate] = useState(new Date());
+            const [dateRange, setDateRange] = useState([new Date(), null]);
+            const [startDate, endDate] = dateRange;
+        // Fecha final:
+            // const [endDate, setEndDate] = useState(null);
+        // Campo endDate controlado por UseForm:
+            // const { register: registerEndDate, formState: { errors: endDateErrors } } = useForm({
+            //     mode: "onChange", // Activa la validación en cada cambio de valor
+            // });
+        // Manejador del rango de fechas:
+            // const onChange = (dates) => {
+            //     const [start, end] = dates;
+            //     setStartDate(start);
+            //     setEndDate(end);
+            // };
 
     const BotonFecha = forwardRef(({ value, onClick }, ref) => (
         <button  onClick={onClick} ref={ref}>
@@ -52,10 +61,11 @@ const Form = () => {
     const onSubmit = (data) => {
         data.fechaNacimiento = fNacimiento;
         data.paisOrigen = paisOrigen;
-        data.fechaValidezInicial = startDate;
-        data.fechaValidezFinal = endDate;
+        // data.fechaValidezInicial = startDate;
+        // data.fechaValidezFinal =  watch('endDate');
         console.log(data);
     }
+
 
 return(
     <>
@@ -182,18 +192,41 @@ return(
                     </div>
 
                 {/* Campo Fecha de Validez */}
-                    <div>
+                    <div data-tooltip-id="validacionFechaValidez">
                         Fecha de validez:
-                        <DatePicker
-                            selected={startDate}
-                            onChange={onChange}
-                            startDate={startDate}
-                            endDate={endDate}
-                            monthsShown={2}
-                            selectsRange
-                            locale={es}
-                            inline
+
+                        <Controller
+                            control={control}
+                            name='fechaValidez'
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(e) => {
+                                        setDateRange(e);
+                                        field.onChange(e);
+                                      }}
+                                    //   isClearable={true}
+                                    //  className="form-control"
+                                    monthsShown={2}
+                                    locale={es}
+                                    inline
+                                    minDate={new Date()}
+                                    selectsRange
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                />
+                            )}
                         />
+
+                    {errors.fechaValidez?.type == "required" && <Tooltip
+                            id="validacionFechaValidez"
+                            content="Completar Fecha de Validez"
+                            variant="error"
+                            place="right"
+                            isOpen={true}
+                        />}
+
                     </div>
 
                     <input type="submit" value="Generar Tarjeta" style={{ color: 'black' }} />
