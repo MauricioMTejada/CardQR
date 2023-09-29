@@ -34,8 +34,6 @@ const Form = ( {setInfoCard} ) => {
             </button>
         ));
 
-    const [submitAttempted, setSubmitAttempted] = useState(false);
-
     // Lista desplegable de la fecha de nacimiento:
         const years = range(1950, getYear(new Date()) - 17, 1);
         const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre", ];
@@ -45,16 +43,10 @@ const Form = ( {setInfoCard} ) => {
         const styleDisplayNombres = {display: 'flex', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px', alignItems: 'center', width: '300px' }
 
     const onSubmit = (data) => {
-        setSubmitAttempted(true);
         data.fechaNacimiento = fNacimiento;
         data.paisOrigen = paisOrigen;
-        // data.fechaValidezInicial = startDate;
-        // data.fechaValidezFinal =  watch('endDate');
-        console.log(data);
         setInfoCard(data)
     }
-
-    console.log(submitAttempted);
 
 
 return(
@@ -75,7 +67,7 @@ return(
                             />
                         </div>
 
-                        {submitAttempted && errors.nombre?.type == "required" && <Tooltip
+                        {errors.nombre?.type == "required" && <Tooltip
                             id="validacionNombre"
                             content="Debe colocar un Nombre"
                             variant="error"
@@ -83,7 +75,7 @@ return(
                             isOpen={true}
                         />}
 
-                        {submitAttempted && errors.nombre?.type == "maxLength" && <Tooltip
+                        {errors.nombre?.type == "maxLength" && <Tooltip
                             id="validacionNombre"
                             content="Máximo 30 caracteres"
                             variant="error"
@@ -103,7 +95,7 @@ return(
                             />
                         </div>
 
-                        {submitAttempted && errors.apellido?.type == "required" && <Tooltip
+                        {errors.apellido?.type == "required" && <Tooltip
                             id="validacionApellido"
                             content="Debe colocar un Apellido"
                             variant="error"
@@ -111,7 +103,7 @@ return(
                             isOpen={true}
                         />}
 
-                        {submitAttempted && errors.apellido?.type == "maxLength" && <Tooltip
+                        {errors.apellido?.type == "maxLength" && <Tooltip
                             id="validacionApellido"
                             content="Máximo 30 caracteres"
                             variant="error"
@@ -209,7 +201,7 @@ return(
                             )}
                         />
 
-                    {submitAttempted && errors.fechaValidez?.type == "required" && <Tooltip
+                    {errors.fechaValidez?.type == "required" && <Tooltip
                             id="validacionFechaValidez"
                             content="Completar Fecha de Validez"
                             variant="error"
