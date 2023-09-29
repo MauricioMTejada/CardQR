@@ -5,12 +5,14 @@ import CardContainer from './Card/CardContainer';
 // import 'tailwindcss/tailwind.css';
 
 function App() {
-  const [startDate, setStartDate] = useState(new Date());
+
+  const [infoCard, setInfoCard] = useState( {nombre: "Nombre", apellido: "Apellido", fechaNacimiento: new Date(), fechaValidez: [new Date(), new Date()]} )
+  // console.log(infoCard);
   return (
-    <>
-      <Form />
-      <CardContainer />
-    </>
+    <div style={{display: 'flex', alignItems: 'stretch'}}>
+      <Form setInfoCard={setInfoCard} />
+      <CardContainer infoCard={infoCard}/>
+    </div>
   )
 }
 

@@ -27,7 +27,6 @@ const DropdownAvatar = ( {userData, setPaisOrigen} ) => {
         setIsDropdownOpen(false);
     };
 
-    const selectedOption2 = "20.png";
 
     return (
         <div className={styles.container}>
@@ -35,7 +34,7 @@ const DropdownAvatar = ( {userData, setPaisOrigen} ) => {
                 <img src={`${baseFolder}/${selectedOption}`} alt={selectedOption} className={styles.image} />
                 <div className={`${styles.dropdown} ${isDropdownOpen ? styles.open : ''}`}>
                     <div className={styles['dropdown-toggle']} onClick={toggleDropdown}>
-                        v
+                    ^
                     </div>
                     <ul className={styles['dropdown-menu']}>
                         {avatarFiles.map((option, index) => (

@@ -10,6 +10,11 @@ const BoxFondo = ({ children }) => {
 		// borderLeft: '1px solid #6415ff', // Cambia el color del borde izquierdo según tus necesidades
 		// borderRight: '1px solid #6415ff', // Cambia el color del borde derecho según tus necesidades
 		// borderBottom: '1px solid #6415ff', // Cambia el color del borde inferior según tus necesidades
+		height: '500px',
+		display: 'Flex',
+		// alignContent: 'center',
+		alignItems: 'center',
+		// alignSelf: 'center',
 	};
 
 	const textStyle = {
@@ -17,9 +22,12 @@ const BoxFondo = ({ children }) => {
 	};
 
 	return (
-		<div style={styleBorder}>
-			<div style={textStyle}>{children}</div>
-		</div>
+		// <div style={{alignItems: 'center'}}>
+			<div style={styleBorder}>
+				<div style={textStyle}>{children}</div>
+			</div>
+		// </div>
+
 	);
 };
 

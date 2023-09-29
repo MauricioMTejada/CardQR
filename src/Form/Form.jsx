@@ -11,9 +11,9 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 
 
-const Form = () => {
+const Form = ( {setInfoCard} ) => {
 
-    const { register, handleSubmit, formState: {errors}, control } = useForm()
+    const { register, handleSubmit, formState: {errors}, control, } = useForm()
 
     // Fecha para persona mayor de edad:
         const eighteenYearsAgo = new Date();
@@ -34,6 +34,8 @@ const Form = () => {
             </button>
         ));
 
+    const [submitAttempted, setSubmitAttempted] = useState(false);
+
     // Lista desplegable de la fecha de nacimiento:
         const years = range(1950, getYear(new Date()) - 17, 1);
         const months = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre", ];
@@ -43,16 +45,20 @@ const Form = () => {
         const styleDisplayNombres = {display: 'flex', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px', alignItems: 'center', width: '300px' }
 
     const onSubmit = (data) => {
+        setSubmitAttempted(true);
         data.fechaNacimiento = fNacimiento;
         data.paisOrigen = paisOrigen;
         // data.fechaValidezInicial = startDate;
         // data.fechaValidezFinal =  watch('endDate');
         console.log(data);
+        setInfoCard(data)
     }
+
+    console.log(submitAttempted);
 
 
 return(
-    <>
+    <div style={{display: 'flex', flexDirection:'column', padding: '0px 10px'}}>
         <BarraDeTitulo title="Formulario: "/>
         <BoxFondo>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +75,7 @@ return(
                             />
                         </div>
 
-                        {errors.nombre?.type == "required" && <Tooltip
+                        {submitAttempted && errors.nombre?.type == "required" && <Tooltip
                             id="validacionNombre"
                             content="Debe colocar un Nombre"
                             variant="error"
@@ -77,7 +83,7 @@ return(
                             isOpen={true}
                         />}
 
-                        {errors.nombre?.type == "maxLength" && <Tooltip
+                        {submitAttempted && errors.nombre?.type == "maxLength" && <Tooltip
                             id="validacionNombre"
                             content="Máximo 30 caracteres"
                             variant="error"
@@ -97,7 +103,7 @@ return(
                             />
                         </div>
 
-                        {errors.apellido?.type == "required" && <Tooltip
+                        {submitAttempted && errors.apellido?.type == "required" && <Tooltip
                             id="validacionApellido"
                             content="Debe colocar un Apellido"
                             variant="error"
@@ -105,7 +111,7 @@ return(
                             isOpen={true}
                         />}
 
-                        {errors.apellido?.type == "maxLength" && <Tooltip
+                        {submitAttempted && errors.apellido?.type == "maxLength" && <Tooltip
                             id="validacionApellido"
                             content="Máximo 30 caracteres"
                             variant="error"
@@ -203,7 +209,7 @@ return(
                             )}
                         />
 
-                    {errors.fechaValidez?.type == "required" && <Tooltip
+                    {submitAttempted && errors.fechaValidez?.type == "required" && <Tooltip
                             id="validacionFechaValidez"
                             content="Completar Fecha de Validez"
                             variant="error"
@@ -216,7 +222,7 @@ return(
                     <input type="submit" value="Generar Tarjeta" style={{ color: 'black' }} />
             </form>
         </BoxFondo>
-    </>
+    </div>
     )
 }
 
