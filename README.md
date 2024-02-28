@@ -1,8 +1,15 @@
-# React + Vite
+# CardQR
+This project is basically an exercise involving form creation, date libraries, and QR code libraries.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Features:
 
-Currently, two official plugins are available:
+- Users are provided with a form to input their details: first name, last name, date of birth, and country of origin.
+- Additionally, there is a calendar feature where users can specify the validity period. This is done by selecting two dates, a start date and an end date, which determine the validity period of the generated card.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Installation:
+
+1. Run `npm install` to install the necessary dependencies.
+
+### Usage:
+
+2. Run `npm run dev` to start the development server.
